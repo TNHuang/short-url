@@ -1,0 +1,16 @@
+%h2	hello this is the shorten url page
+%form{ :action => shorten_url, :method => "POST" }
+	= form_auth
+	%table
+		%tr
+			%td
+				%label{:for => "out_url"}
+					Out url:
+			%td
+				%input{:type => "text", :name => "link[out_url]", :id => "out_url", :value => @link[:out_url]}
+	%input{:type => "submit", :value => "get shortend url"}
+
+- if @link.in_url
+	%div
+		short url:
+		= link_to "#{@link.in_url}", short_url(@link.in_url)
