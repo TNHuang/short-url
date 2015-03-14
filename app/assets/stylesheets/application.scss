@@ -21,34 +21,50 @@ html, body, div, input, span, a, ul, li, h2 {
 	font: inherit;
 	background: none;
 	color: inherit;
+	list-style: none;
 }
 
 body {
 	font-family: sans-serif;
 	font-size: 16px;
-	border: 1px solid green;
-	width: 400px;
+	border: 1px solid black;
+	width: 600px;
 	height: auto;
 	margin: 30px auto;
 	border-radius: 5px;
+
 }
 
 h2 {
 	font-size: 24px;
+	margin: 0 10px;
 	padding: 10px;
 	border-bottom: 1px solid #ccc;
+	text-align: center;
+}
+
+.errors-container {
+	margin: 5px;
+	& > *{
+		padding: 5px;
+		background: red;
+	}
 }
 
 .submit-btn {
-	border: 1px solid #b92c28;
+	cursor: pointer;
+	border: 1px solid #28a4c9;
 	color: white;
 	font-weight: bold;
-	background: linear-gradient( to bottom, #d9534f 0, #c12e2a 100%);
-	padding: 10px;
+	background: linear-gradient(to bottom,#5bc0de 0,#2aabd2 100%);
+	padding: 5px 10px;
 	border-radius: 5px;
 	text-shadow: inset 0 1px 0 rgba(255,255,255, 0.15), 0 1px 1px rgba(0,0,0, 0.75);
-	display: block;
-	margin: 10px auto;
+	margin-top: 5px;
+	transition: background 0.7s;
+	&:hover{
+		background: linear-gradient(to bottom, darken(#5bc0de, 20), darken(#2aabd2, 20));
+	}
 }
 
 .clearfix:after {
@@ -60,12 +76,21 @@ h2 {
 .label-container {
 	display: block;
 	margin: 10px auto;
+
+	.label {
+		display: block;
+		float: left;
+		margin: 5px;
+		padding: 5px;
+	}
+	.item {
+		display: block;
+		float: left;
+		margin: 5px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		padding: 5px;
+	}
 }
-.label, .item {
-	display: block;
-	float: left;
-	border: 1px solid black;
-	padding: 5px;
-	margin-left: 10px;
-}
+
 

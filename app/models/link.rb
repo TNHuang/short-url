@@ -16,7 +16,7 @@ class Link < ActiveRecord::Base
 		clean_url = Link.clean_url(params[:out_url])
 		@link = Link.find_by({out_url: clean_url})
 		unless @link
-			@link = Link.create!({ 
+			@link = Link.new({ 
 				out_url: clean_url,
 				in_url: Link.generate_unique_in_url 
 				}) 
