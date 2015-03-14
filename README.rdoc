@@ -6,4 +6,4 @@
 -list out all avaliable short url in the database
 
 -contain unit and controller rspec
-<tt>rake doc:app</tt>.
+
