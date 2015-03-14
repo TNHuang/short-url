@@ -1,4 +1,4 @@
-== README
+== shorten url rails app
 -create a short url base on an input long url
 
 -can directly redirect to long url by using short url extension
