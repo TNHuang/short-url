@@ -1,4 +1,18 @@
+require "net/http"
+
+class ValidUrlValidator < ActiveModel::Validator
+  def validate(link)
+    unless Link.valid_out_url?(link.out_url)
+      link.errors[:out_url] << ": #{link.out_url} is not a valid url!"
+    end
+  end
+end
+
 class Link < ActiveRecord::Base
+	
+	include ActiveModel::Validations
+  	validates_with ValidUrlValidator #make the out url is actually exist
+	
 	validates :in_url, :out_url, :http_status, presence: true
 	validates :out_url, :in_url, uniqueness: true 
 	
@@ -40,4 +54,22 @@ class Link < ActiveRecord::Base
 		end while Link.exists?(in_url: in_url)
 		in_url
 	end
+
+	def self.valid_out_url?(out_url)
+		url = URI.parse(out_url)
+		req = Net::HTTP.new(url.host, url.port)
+		req.use_ssl = (url.scheme == 'https')
+		path = url.path if url.path.present?
+		begin
+			res = req.request_head(path || '/')
+			if res.kind_of?(Net::HTTPRedirection)
+				url_exist?(res['location']) # Go after any redirect and make sure you can access the redirected URL 
+			else
+				![4,5].include?(res.code[0]) # Not from 4xx or 5xx families
+			end
+		rescue
+			return false #false if can't find the server
+		end
+	end
+
 end
