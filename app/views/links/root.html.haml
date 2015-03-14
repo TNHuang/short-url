@@ -13,7 +13,6 @@
 			%input{:type => "text", :name => "link[out_url]", :id => "out_url", :value => @link[:out_url]}
 		%input{:type => "submit", :value => "get shortened url", :class=>"submit-btn"}
 
-
 - unless @links.empty?
 	%h2 Shorten urls index
 	- @links.each do |link|
