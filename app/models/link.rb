@@ -10,8 +10,8 @@ end
 
 class Link < ActiveRecord::Base
 	
-	# include ActiveModel::Validations
- #  	validates_with ValidUrlValidator #make the out url is actually exist
+	include ActiveModel::Validations
+  	validates_with ValidUrlValidator #make the out url is actually exist
 	
 	validates :in_url, :out_url, :http_status, presence: true
 	validates :out_url, :in_url, uniqueness: true 
