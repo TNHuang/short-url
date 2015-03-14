@@ -19,11 +19,13 @@ ActiveRecord::Schema.define(version: 20150312060211) do
   create_table "links", force: true do |t|
     t.string   "in_url",                    null: false
     t.text     "out_url",                   null: false
-    t.integer  "http_status", default: 301
+    t.integer  "http_status", default: 301, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "links", ["in_url"], name: "index_links_on_in_url", unique: true, using: :btree
+  add_index "links", ["out_url", "in_url"], name: "index_links_on_out_url_and_in_url", unique: true, using: :btree
+  add_index "links", ["out_url"], name: "index_links_on_out_url", unique: true, using: :btree
 
 end

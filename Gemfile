@@ -26,7 +26,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'haml-rails', '>= 0.3.4'
-gem 'rails_12factor'
+
 
 group :development do
   gem 'annotate'
@@ -34,7 +34,25 @@ group :development do
   gem 'binding_of_caller'
   gem 'debugger2'
   gem 'pry-rails'
-  gem 'quiet_assets'
+
+end
+
+group :development, :test do
+	gem 'rspec-rails'
+	gem 'factory_girl_rails'
+	gem 'quiet_assets'
+end
+
+group :test do 
+	gem 'guard-rspec'
+	gem 'shoulda-matchers'
+	gem 'database_cleaner'
+	gem "launchy"
+	gem "capybara"
+end
+
+group :production do
+	gem 'rails_12factor'
 end
 
 # Use unicorn as the app server
