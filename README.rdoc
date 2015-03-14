@@ -1,4 +1,6 @@
 == shorten url rails app
+-now contain vaild url validator => will sent a http request to check if that url exist before saving to database, other wise it will trigger an error. Although it's a bit laggy since it has to send a request to a url (and its redirect) before triggering error.
+
 -create a short url base on an input long url
 
 -can directly redirect to long url by using short url extension
