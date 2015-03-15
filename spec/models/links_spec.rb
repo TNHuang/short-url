@@ -53,18 +53,18 @@ describe Link do
 			end
 		end
 		describe "#find or create short url" do
-			it "should find short url given a long url if given long url existed in database" do
+			it "should find short url given pre-existing long url" do
 				link1 = create(:link)
 				link2 = Link.find_or_create_short_url({out_url: "http://www.google.com"})
 				
 				expect(link2.in_url).to eq(link1.in_url)
 			end
-			it "should create a new short url if given long url is new" do
+			it "should create a new short url given new long url" do
 				link = Link.find_or_create_short_url({out_url: "www.google.com"})
 				expect(Link.all.include?(link)).to be_falsey
 			end
 
-			it "should not create a new short url if given long url existed in database" do
+			it "should not create a new short url given pre-existing long url" do
 				link = create(:link)
 				expect{
 					Link.find_or_create_short_url({out_url: "www.google.com"})

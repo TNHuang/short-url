@@ -2,7 +2,11 @@ require 'rails_helper'
 
 describe LinksController do
 	describe "GET #root" do
-		it "render root page" do
+		it "should response successfully" do
+			get :root
+			expect(response).to have_http_status(200)
+		end
+		it "should render root page" do
 			expect( get :root).to render_template(:root)
 		end
 	end

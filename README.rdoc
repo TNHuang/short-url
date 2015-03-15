@@ -5,5 +5,5 @@
 
 -list out all avaliable short url in the database
 
--contain unit and controller rspec
+-contain unit and controller rspec, also view spec
 
