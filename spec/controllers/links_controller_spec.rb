@@ -8,33 +8,34 @@ describe LinksController do
 	end
 	
 	describe "POST #find_or_create_short_url" do
+		let(:find_or_create_short_url) {
+			post "find_or_create_short_url", link: { out_url: "www.google.com" } 
+		}
+
 		it "create short url when long url don't exist in database" do
 			expect{
-				post "find_or_create_short_url", link: { out_url: "www.google.com" }
-				}.to change(Link, :count).by(1)
+				post "find_or_create_short_url", link: { out_url: "www.google.com" } 
+			}.to change(Link, :count).by(1)
 		end
 
 		it "find short url when long url existed in database" do
-			create(:link)
-			post "find_or_create_short_url", link: {out_url: "www.google.com"}
-			link = Link.first
+			link = create(:link)			
 			expect(Link.all).to eq([link])
-			expect(Link.count).to eq(1)
+			expect{:find_or_create_short_url}.to_not change(Link, :count)
 		end
 
 		it "presence of http extension should not affect short url" do
-			post "find_or_create_short_url", link: {out_url: "www.google.com"}
-			post "find_or_create_short_url", link: {out_url: "http://www.google.com"}
-			link = Link.first
+			link = create(:link)
 			expect(Link.all).to eq([link])
-			expect(Link.count).to eq(1)
+			expect{
+				post "find_or_create_short_url", link: {out_url: "http://www.google.com"}
+			}.to_not change(Link, :count)
 		end
 	end 
 
-	describe "GET #go" do
+	describe "GET #url address bar" do
 		it "should redirect to long url when using short url existed in database" do
-			post "find_or_create_short_url", link: {out_url: "www.google.com"}
-			link = Link.first
+			link = create(:link)
 			get "go", in_url: link.in_url
 			expect(response).to redirect_to link.out_url
 		end
