@@ -32,7 +32,7 @@ describe LinksController do
 	end 
 
 	describe "GET #go" do
-		it "should redirect to long url when using short url" do
+		it "should redirect to long url when using short url existed in database" do
 			post "find_or_create_short_url", link: {out_url: "www.google.com"}
 			link = Link.first
 			get "go", in_url: link.in_url

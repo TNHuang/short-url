@@ -42,4 +42,35 @@ describe Link do
 			end
 		end
 	end
+
+	describe "#instance methods" do
+		describe "#url cleaning" do
+			it "should not modify url when url contain http:// header" do
+				expect(Link.clean_url("http://www.google.com")).to eq("http://www.google.com/")
+			end
+			it "should prepend http:// when http:// is missing from url" do
+				expect(Link.clean_url("www.google.com")).to eq("http://www.google.com/")
+			end
+		end
+		describe "#find or create short url" do
+			it "should find short url given a long url if given long url existed in database" do
+				link1 = create(:link)
+				link2 = Link.find_or_create_short_url({out_url: "http://www.google.com"})
+				
+				expect(link2.in_url).to eq(link1.in_url)
+			end
+			it "should create a new short url if given long url is new" do
+				link = Link.find_or_create_short_url({out_url: "www.google.com"})
+				expect(Link.all.include?(link)).to be_falsey
+			end
+
+			it "should not create a new short url if given long url existed in database" do
+				link = create(:link)
+				expect{
+					Link.find_or_create_short_url({out_url: "www.google.com"})
+				}.to_not change(Link, :count)
+			end
+		end
+	end
+
 end
