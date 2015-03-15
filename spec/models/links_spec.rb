@@ -43,7 +43,7 @@ describe Link do
 		end
 	end
 
-	describe "#instance methods" do
+	describe "#methods" do
 		describe "#url cleaning" do
 			it "should not modify url when url contain http:// header" do
 				expect(Link.clean_url("http://www.google.com")).to eq("http://www.google.com/")
