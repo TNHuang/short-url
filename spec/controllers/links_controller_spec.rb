@@ -13,15 +13,13 @@ describe LinksController do
 		}
 
 		it "create short url when long url don't exist in database" do
-			expect{
-				post "find_or_create_short_url", link: { out_url: "www.google.com" } 
-			}.to change(Link, :count).by(1)
+			expect{find_or_create_short_url}.to change(Link, :count).by(1)
 		end
 
 		it "find short url when long url existed in database" do
 			link = create(:link)			
 			expect(Link.all).to eq([link])
-			expect{:find_or_create_short_url}.to_not change(Link, :count)
+			expect{find_or_create_short_url}.to_not change(Link, :count)
 		end
 
 		it "presence of http extension should not affect short url" do
