@@ -15,7 +15,7 @@ describe LinksController do
 		end
 
 		it "find short url when long url existed in database" do
-			post "find_or_create_short_url", link: {out_url: "www.google.com"}
+			create(:link)
 			post "find_or_create_short_url", link: {out_url: "www.google.com"}
 			link = Link.first
 			expect(Link.all).to eq([link])
