@@ -9,16 +9,16 @@ class ValidUrlValidator < ActiveModel::Validator
 end
 
 class Link < ActiveRecord::Base
-	
-	# include ActiveModel::Validations
- 	# validates_with ValidUrlValidator #make the out url is actually exist
-	
+		
 	validates :in_url, :out_url, :http_status, presence: true
 	validates :out_url, :in_url, uniqueness: true 
 	
 	validates_uniqueness_of :out_url, scope: :in_url
 
 	after_initialize :ensure_in_url, :ensure_clean_out_url
+	
+	include ActiveModel::Validations
+	validates_with ValidUrlValidator #make the out url is actually exist
 
 	URL_PROTOCOL_HTTP = "http://"
   	REGEX_LINK_HAS_PROTOCOL = /^http:\/\/|^https:\/\//i
@@ -41,13 +41,14 @@ class Link < ActiveRecord::Base
 
 	def self.generate_unique_in_url
 		begin
-			in_url = SecureRandom.base64(32)
+			in_url = SecureRandom.urlsafe_base64(32)
 		end while Link.exists?(in_url: in_url)
 		in_url
 	end
 
 	#use to determine if a url is valid
 	def self.valid_out_url?(out_url)
+		
 		url = URI.parse(out_url)
 		req = Net::HTTP.new(url.host, url.port)
 		req.use_ssl = (url.scheme == 'https')

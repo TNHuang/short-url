@@ -11,14 +11,23 @@ describe Link do
 	end
 
 	describe "#validations" do
-		let(:missing_out_url) { build(:link, out_url: nil)}
+		let(:missing_out_url) { build(:link, out_url: "")}
 		let(:missing_in_url) { build(:link, in_url: nil)}
 		let(:missing_http_status) { build(:link, http_status: nil)}
 		
 		describe "#model level" do
-			it { should validate_presence_of(:out_url)}
-			it { should validate_presence_of(:in_url)}
-			it { should validate_presence_of(:http_status)}
+
+			it "should validate presence of out url" do
+				expect(missing_out_url).to_not be_valid
+			end
+
+			it "should validate presence of in url" do
+				expect(missing_in_url).to_not be_valid
+			end
+
+			it "should validate presence of http_status" do
+				expect(missing_http_status).to_not be_valid
+			end
 			
 			it "should validate long_url unique" do
 				short_url_1 = create(:link)
@@ -38,6 +47,7 @@ describe Link do
 				expect{ missing_in_url.save!(validate: false) }.to raise_error
 			end
 			it "validates presence of out_url" do
+				missing_out_url = build(:link, out_url: nil)
 				expect{ missing_out_url.save!(validate: false) }.to raise_error
 			end
 		end
