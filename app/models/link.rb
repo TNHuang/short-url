@@ -48,7 +48,7 @@ class Link < ActiveRecord::Base
 
 	#use to determine if a url is valid
 	def self.valid_out_url?(out_url)
-		
+		return false if out_url.nil? || out_url == ""
 		url = URI.parse(out_url)
 		req = Net::HTTP.new(url.host, url.port)
 		req.use_ssl = (url.scheme == 'https')

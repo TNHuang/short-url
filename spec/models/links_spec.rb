@@ -11,7 +11,7 @@ describe Link do
 	end
 
 	describe "#validations" do
-		let(:missing_out_url) { build(:link, out_url: "")}
+		let(:missing_out_url) { build(:link, out_url: nil)}
 		let(:missing_in_url) { build(:link, in_url: nil)}
 		let(:missing_http_status) { build(:link, http_status: nil)}
 		
@@ -47,7 +47,6 @@ describe Link do
 				expect{ missing_in_url.save!(validate: false) }.to raise_error
 			end
 			it "validates presence of out_url" do
-				missing_out_url = build(:link, out_url: nil)
 				expect{ missing_out_url.save!(validate: false) }.to raise_error
 			end
 		end
