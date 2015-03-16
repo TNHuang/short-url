@@ -71,6 +71,15 @@ describe Link do
 				}.to_not change(Link, :count)
 			end
 		end
+
+		describe "#valid out url" do
+			it "should return true if link can send back a non-4xx or non-5xx response" do
+				expect(Link.valid_out_url?("http://www.google.com")).to be_truthy
+			end
+			it "should return false if link is an invalid url" do
+				expect(Link.valid_out_url?("adsfsafe")).to be_falsey
+			end
+		end
 	end
 
 end

@@ -39,15 +39,6 @@ class Link < ActiveRecord::Base
 		@link
 	end
 
-	def ensure_clean_out_url
-		self.out_url = Link.clean_url(self.out_url)
-	end
-
-	#call back to be fire to generate unique in url
-	def ensure_in_url
-		self.in_url ||= Link.generate_unique_in_url
-	end
-
 	def self.generate_unique_in_url
 		begin
 			in_url = SecureRandom.base64(32)
@@ -55,6 +46,7 @@ class Link < ActiveRecord::Base
 		in_url
 	end
 
+	#use to determine if a url is valid
 	def self.valid_out_url?(out_url)
 		url = URI.parse(out_url)
 		req = Net::HTTP.new(url.host, url.port)
@@ -70,6 +62,17 @@ class Link < ActiveRecord::Base
 		rescue
 			return false #false if can't find the server
 		end
+	end
+
+	private
+
+	def ensure_clean_out_url
+		self.out_url = Link.clean_url(self.out_url)
+	end
+
+	#call back to be fire to generate unique in url
+	def ensure_in_url
+		self.in_url ||= Link.generate_unique_in_url
 	end
 
 end

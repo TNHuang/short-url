@@ -13,7 +13,8 @@ class LinksController < ApplicationController
 		redirect_to root_url
 	end
 
-	#go to the long url link by adding shorten url extension
+	#when you copy and paste short url into the address bar
+	#this method triggers
 	def go
 		@link = Link.find_by_in_url(params[:in_url])
 		unless @link
