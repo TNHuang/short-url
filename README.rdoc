@@ -1,5 +1,5 @@
 == shorten url rails app
--validate long url is real link before save it to database. it can be a bit slow if url is invalid as response need to time out first before throwing error.
+-validate long url is real link before saving it to database. it can be a bit slow if url is invalid.
 
 -create a short url base on an input long url
 
